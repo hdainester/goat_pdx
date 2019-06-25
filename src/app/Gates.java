@@ -84,6 +84,10 @@ public class Gates {
         this.closed.remove(new Integer(g));
     }
 
+    public boolean isOpen(int i) {
+        return !closed.contains(i);
+    }
+
     @Override
     public String toString() {
         return String.format("[%s] [%s] [%s]",

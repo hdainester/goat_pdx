@@ -60,13 +60,35 @@ public class App {
     private static void readGate(Gates gates, Scanner sc, boolean isSim) {
         while(true) try {
             System.out.print("Select a gate: ");
-            int g = isSim ? RNG.nextInt(3) : sc.nextInt(); // not a very smart ai but whatever..
+            int g = isSim ? simRead(gates) : sc.nextInt();
             gates.select(g);
             System.out.println("Selected " + g);
-            return;
+            break;
         } catch(Exception e) {
             System.out.println(e.getMessage());
             if(!isSim) sc.nextLine();
+            else simChoice = 0;
         }
+    }
+
+    private static int simChoice;
+    private static int simRead(Gates gates) {
+        int g = -1;
+
+        if(simChoice > 0) {
+            for(int i = 0; i < 3; ++i) {
+                if(i != (simChoice-1) && !gates.isOpen(i)) {
+                    g = i+1;
+                    break;
+                }
+            }
+
+            simChoice = 0;
+        } else {
+            g = RNG.nextInt(3)+1;
+            simChoice = g;
+        }
+
+        return g;
     }
 }
